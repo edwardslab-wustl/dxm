@@ -2,13 +2,13 @@
 
 Installation
 
-Using pip and python3:
+Using pip and python3 (3.5+):
 
-download dxm-0.1.0-cp35-cp35m-linux_x86_64.whl
-python -m pip install dxm-0.1.0-cp35-cp35m-linux_x86_64.whl
+download dxm-0.1.0-cp35-none-any.whl
+python -m pip install dxm-0.1.0-cp35-none-any.whl
 
 For a user-specific install use the --user flag
-python -m pip install --user dxm-0.1.0-cp35-cp35m-linux_x86_64.whl
+python -m pip install --user dxm-0.1.0-cp35-none-any.whl
 
 Required Packages
 
