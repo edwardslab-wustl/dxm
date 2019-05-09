@@ -1,0 +1,4 @@
+include Bins.txt
+include Freqs.txt
+include README.txt
+include LICENSE.txt
