@@ -1,27 +1,27 @@
 ﻿dxm
 
-Installation
+Installation, using python3 (3.5+):
 
-Using python3 (3.5+):
+Download dxm-0.1.0.tar.gz from source.
 
-download dxm-0.1.0.tar.gz
-tar -zxvf dxm-0.1.0.tar.gz
-cd dxm-0.1.0
-python3 setupFull.py install
+     tar -zxvf dxm-0.1.0.tar.gz
+     cd dxm-0.1.0
+     python3 setupFull.py install
+
+For user-specific installations, run the install command with the --user flag. 
 
 The "deprecated NumPy API" and "import_array" warnings can be safely ignored.
 
-Required Packages
-
-numpy
-cython (>=0.24)
+Required Packages:
+     numpy
+     cython (>=0.24)
 We recommend installing anaconda for a python distribution.
 
-Quick Start with example data
+Quick Start with Example Data
 
 Module A) Estimate Fractional Prevalence of underlying subpopulations (Optional)
 
-dxm_estimateFracs -i sampleinput.txt -k 3 -o testPrevalence
+dxm_estimateFracs -i sampleInput.txt -k 3 -o testPrevalence
 
 The output is testPrevalence.txt. Each row is the fractional prevalence of a subpopulation, ordered smallest to largest. Note that this utility is INCOMPATIBLE with dxm_solveMethylation, which has its own fractional prevalence solution call.
 
