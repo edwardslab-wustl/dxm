@@ -1,0 +1,5 @@
+[console_scripts]
+dxm_callIDMR = dxm.dxm_callIDMR:main
+dxm_estimateFracs = dxm.dxm_estimateFracs:main
+dxm_solveMethylation = dxm.dxm_solveMethylation:main
+

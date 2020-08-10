@@ -1,0 +1,18 @@
+Metadata-Version: 1.2
+Name: dxm
+Version: 0.1.0
+Summary: Deconvolution of Methylation Sequencing Data
+Home-page: UNKNOWN
+Author: Jerry Fong
+Author-email: fongj@wustl.edu
+Maintainer: John Edwards
+Maintainer-email: jredwards@wustl.edu
+License: GPLv3
+Description: DXM will deconvolve the processed methylation sequencing data from a heterogeneous population into its subpopulation methylation profiles and their relative prevalence.
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
+Classifier: Operating System :: POSIX
+Classifier: Topic :: Science/Engineering :: Bio-Informatics
+Classifier: Programming Language :: Python :: 3.5
