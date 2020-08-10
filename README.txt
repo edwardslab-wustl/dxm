@@ -1,6 +1,6 @@
 ﻿dxm
 
-test
+test2
 
 Installation, using python3 (3.5+):
 
