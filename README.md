@@ -17,10 +17,12 @@ For user-specific installations, run the install command with the --user flag.
 
 The "deprecated NumPy API" and "import_array" warnings can be safely ignored.
 
+dxm is also available as a Docker container at: https://hub.docker.com/r/edwardslab/dxm
+
 
 ## Quick Start with Example Data
 
-The methylation data input file should be in a bed-like format:
+Data for this example can be found in the example_data folder in the installation folder. The methylation data input file should be in a bed-like format:
 
 <chr> <position1> <position2> <regionName> <fractionalMethylation> <coverage>
 
