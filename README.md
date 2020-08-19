@@ -17,7 +17,7 @@ For user-specific installations, run the install command with the --user flag.
 
 The "deprecated NumPy API" and "import_array" warnings can be safely ignored.
 
-dxm is also available as a docker container at: https://hub.docker.com/r/edwardslab/dxm
+dxm is also available as a Docker container at: https://hub.docker.com/r/edwardslab/dxm
 
 
 ## Quick Start with Example Data
