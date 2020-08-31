@@ -13,7 +13,7 @@ def setup_parser_arguments():
     #global parser
     parser = argparse.ArgumentParser(
             formatter_class=argparse.RawDescriptionHelpFormatter,description='''
-Identifies subclonal methylation patternsi in WGBS data for specific regions.''')
+Identifies subclonal methylation patterns in WGBS data for specific regions.''')
     parser.add_argument('-i','--inFile',required=True,help="Input file name (REQUIRED).  Format should be bed-like: chr pos pos2 regionName methylLevel coverage")
     parser.add_argument('-o','--outPref', default="dxm_output", help="Prefix of output files. (Default: dxm_output)")
     parser.add_argument('-c','--maxCoverage',default=400, type=int, help="The maximum coverage in the data. Important to set for computational time. (Default: 400)")

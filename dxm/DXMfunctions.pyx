@@ -50,6 +50,9 @@ def load_transitionMatrix(binFile,freqFile):
 # Processes an input sample. Sample is a tab delimited file with regionName, position, fractional methylation, sequencing coverage
 def load_sample(fileName):
     positions = []
+    #orig_positions = []
+    orig_positions2 = []
+    chromosomes = []
     methVals = []
     coverages = []
     gene = []
@@ -67,6 +70,9 @@ def load_sample(fileName):
             localMeth = float(data[4])
             localCov = float(data[5])
             positions.append(localPos)
+            #orig_positions.append(localPos)
+            orig_positions2.append(localPos2)
+            chromosomes.append(chrom)
             methVals.append(localMeth)
             coverages.append(localCov)
             if geneName not in helpLine.keys():
@@ -80,7 +86,8 @@ def load_sample(fileName):
         newTuple = (startIndex,endIndex)
         indices.append(newTuple)
         startIndex = endIndex + 1
-    outTuple = ( gene, np.array(methVals), np.array(positions,dtype = np.int32), np.array(coverages,dtype = np.int32), indices )
+    #outTuple = ( gene, np.array(methVals), np.array(positions,dtype = np.int32), np.array(coverages,dtype = np.int32), indices )
+    outTuple = ( gene, np.array(methVals), np.array(positions,dtype = np.int32), np.array(coverages,dtype = np.int32), indices, orig_positions2, chromosomes)
     return outTuple
 
 # Processes an input sample. Sample is a tab delimited file with regionName, position, fractional methylation, sequencing coverage
@@ -532,7 +539,8 @@ def runDXMnoIP(sampleName, outPref, refTable,maxCoverage,maxNumSubpop,REFFRACS,B
     cdef double[:] BINS = mybins # should make memory view of this np array
     cdef double[:,:] FREQS = myfreqs # should make memory view of this np array
 
-    (GENE, methvals, pos, coverages, INDICES) = load_sample(sampleName)
+    #(GENE, methvals, pos, coverages, INDICES) = load_sample(sampleName)
+    (GENE, methvals, pos, coverages, INDICES, pos2, chromosomes) = load_sample(sampleName)
     cdef int i=0
     cdef double[:] METHVALS = methvals
     cdef int[:] POS = pos
@@ -559,6 +567,8 @@ def runDXMnoIP(sampleName, outPref, refTable,maxCoverage,maxNumSubpop,REFFRACS,B
         (startIndex, endIndex) = INDICES[i]
         newMeth = np.array(METHVALS[startIndex:endIndex+1])
         newPos = np.array(POS[startIndex:endIndex+1], dtype=np.int32)
+        orig_pos2 = pos2[startIndex:endIndex+1]
+        chrom = chromosomes[startIndex:endIndex+1]
         newCoverage = np.array(COVERAGES[startIndex:endIndex+1], dtype=np.int32)
         NUMCPG = endIndex-startIndex+1
 
@@ -589,7 +599,8 @@ def runDXMnoIP(sampleName, outPref, refTable,maxCoverage,maxNumSubpop,REFFRACS,B
             ALLVIT[geneName].append(bestOdds)
             numSubpop += 1
 
-        SOLUTIONS[geneName] = (bestStates,newPos,bestOdds,bestProbPath)
+        #SOLUTIONS[geneName] = (bestStates,newPos,bestOdds,bestProbPath)
+        SOLUTIONS[geneName] = (bestStates,newPos,bestOdds,bestProbPath,orig_pos2,chrom)
         geneByNumSubpop[numSubpop].append(geneName)
 
     for keyVal in geneByNumSubpop.keys():
@@ -597,12 +608,17 @@ def runDXMnoIP(sampleName, outPref, refTable,maxCoverage,maxNumSubpop,REFFRACS,B
         targetGenesToWrite = geneByNumSubpop[keyVal]
         for x in range(0,len(targetGenesToWrite)):
             myTarget = targetGenesToWrite[x]
-            (myTracks, myPos,logOdds, myProbPath)= SOLUTIONS[myTarget]
+            #(myTracks, myPos,logOdds, myProbPath)= SOLUTIONS[myTarget]
+            (myTracks, myPos,logOdds, myProbPath, orig_pos2, chromosomes)= SOLUTIONS[myTarget]
             for y in range(0,len(myTracks)):
                 tempTrack = [str(elementToStr) for elementToStr in myTracks[y]]
                 outTemp = '\t'.join(tempTrack)
                 outPos = myPos[y]
-                outLine = '%s\t%s\t%s\n' %(myTarget,outPos,outTemp)
+                chrom = chromosomes[y]
+                #pos = orig_pos[y]
+                pos2 = orig_pos2[y]
+                #outLine = '%s\t%s\t%s\n' %(myTarget,outPos,outTemp)
+                outLine = '%s\t%s\t%s\t%s\t%s\n' %(chrom, outPos, pos2, myTarget,outTemp)
                 OUTPUT.write(outLine)
         OUTPUT.close()
     OUTPUT2 = open('%s_allVitProb.txt' %(outPref),'w')

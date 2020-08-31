@@ -87,14 +87,19 @@ def getDXMdata(sampleFile,putativeDMRgene):
     with open(sampleFile,'r') as INPUT:
         for line in INPUT:
             data = line.strip().split("\t")
-            gene = data[0]
+            #gene = data[0]
+            gene = data[3]
             if numSubpop == 0:
                 numSubpop = len(data)-2
             if gene in putativeDMRgene:
                 pos = int(float(data[1]))
-                methSol = data[2:2+numSubpop]
+                pos2 = int(float(data[2]))
+                chrom = data[0]
+                #methSol = data[2:2+numSubpop]
+                methSol = data[4:4+numSubpop]
                 goodMethSol = [int(float(x)) for x in methSol]
-                geneMethTuples[gene].append( (pos,goodMethSol) )
+                #geneMethTuples[gene].append( (pos,goodMethSol) )
+                geneMethTuples[gene].append( (pos,goodMethSol,pos2,chrom) )
     return geneMethTuples
 
 def findDiff(methStates):
@@ -112,6 +117,8 @@ def calcDXMDMR(geneMethTuples,outputPrefix):
             element = geneMethTuples[gene][x]
             currPos = element[0]
             methList = element[1]
+            currPos2 = element[2]
+            chrom = str(element[3])
             areAllSame = findDiff(methList)
             if areAllSame:
                 if len(currDMR) != 0:
@@ -124,7 +131,8 @@ def calcDXMDMR(geneMethTuples,outputPrefix):
                         if totalCpG < numcpgThresh or totalLength < lengthThresh:
                             currDMR = []
                         else:
-                            DXMdmrs[gene].append( (currDMR[0][0],currDMR[-1][0]) )
+                            DXMdmrs[gene].append( (chrom, str(currDMR[0][0]), str(currDMR[-1][0]), gene) )
+                            #DXMdmrs[gene].append( (currDMR[0][0],currDMR[-1][0]) )
                             currDMR = []
                     else:
                         currDMR.append( (currPos,0) )
@@ -139,13 +147,16 @@ def calcDXMDMR(geneMethTuples,outputPrefix):
                     totalLength = currDMR[-1][0]-currDMR[0][0]
 
                     if numDiffCPG/totalCpG >= purityThresh and totalCpG >= numcpgThresh and totalLength >= lengthThresh:
-                        DXMdmrs[gene].append( (currDMR[0][0], currDMR[-1][0]) )
+                        DXMdmrs[gene].append( (chrom, str(currDMR[0][0]), str(currDMR[-1][0]), gene) )
+                        #DXMdmrs[gene].append( (currDMR[0][0], currDMR[-1][0]) )
 
     # now process your dmrs and write to output
     OUTPUT = open('%s_DXMdmrs.txt' %(outputPrefix),'w')
     for myKey in DXMdmrs:
         for myGoodDMR in DXMdmrs[myKey]:
-            outLine = '%s\t%s\t%s\n' %(myKey,myGoodDMR[0],myGoodDMR[1])
+            #outLine = '%s\t%s\t%s\t%s\n' %(myGoodDMR[2],myGoodDMR[0],myGoodDMR[1],myKey)
+            outLine = "\t".join(myGoodDMR) + "\n"
+            #outLine = '%s\t%s\t%s\n' %(myKey,myGoodDMR[0],myGoodDMR[1])
             OUTPUT.write(outLine)
     OUTPUT.close()
     return DXMdmrs
