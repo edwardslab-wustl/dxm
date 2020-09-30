@@ -62,7 +62,7 @@ Example:
 
 Notes: 
 
-Set the -m flag to the maximum coverage in the input file.  Increasing -m above the maximum coverage will needlessly increase memory usage.
+Set the -c flag to the maximum coverage in the input file.  Increasing -c above the maximum coverage will needlessly increase memory usage.
 
 DXM computational time scales with number of subpopulations, number of CpG, and maximum coverage. DXM solved eRRBS and Methyl-Seq samples for 2 subpopulations at average coverage of 60x in ~2 hours.
 
