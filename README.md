@@ -27,7 +27,7 @@ dxm is also available as a Docker container at: https://hub.docker.com/r/edwards
 
 Data for this example can be found in the example_data folder in the installation folder. The methylation data input file should be in a bed-like format:
 
-'<chr> <position1> <position2> <regionName> <fractionalMethylation> <coverage>'
+\<chr\> \<position1\> \<position2\> \<regionName\> \<fractionalMethylation\> \<coverage\>
 
 ### Input file format notes:
 chr - chromosome. Note that this field is not used and can be set to anything.
