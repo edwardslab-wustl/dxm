@@ -30,6 +30,7 @@ Data for this example can be found in the example_data folder in the installatio
 \<chr\> \<position1\> \<position2\> \<regionName\> \<fractionalMethylation\> \<coverage\>
 
 ### Input file format notes:
+
 chr - chromosome. Note that this field is not used and can be set to anything.
 
 regionName - please make unique name for each region tested (e.g. gene name)
@@ -41,6 +42,8 @@ fractionalMethylation - values should be between 0 (fully unmethylated) and 1 (f
 coverage - sequencing coverage for that position. Please provide as an integer.
 
 All data should be filtered such that coverage is below the maximum expected sequencing coverage, set as the -m flag in dxm_solveMethylation.
+
+DXM generates relative coordinates for internal calculations. As such, it does not utilize chromosome or position 2 data explicitly, though these columns are required by DXM to be compatible with BED-like files. DXM computes across all CpGs of a given region, and thus, unique region names should be generated for each region of interest. We recommend adding region names with utilities such as the 'intersect' command from BEDTOOLS, though linux commands such as awk or sed can be used as well.
 
 
 ### dxm_estimateFracs
@@ -98,7 +101,7 @@ The output of dxm_callIDMR is putative_DXMdmrs.txt. Its format is tab-delimited:
 	1. chromosome
 	2. start coordinate
 	3. end coordinate
-	4. region name
+	4. region name.
 
 Note: if there are multiple putative iDMRs for the same region, they will have the same corresponding region name.
 
