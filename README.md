@@ -2,6 +2,8 @@
 
 DXM performs a local deconvolution of DNA methylation data for one or more regions of the genome.
 
+DXM was first developed by Jerry Fong while he was a member of the Edwards Lab. He is now a resident physician at Barnes Jewish Hospital. DXM is currently maintained by the Edwards Lab.
+
 ## Installation
 Requires python3 (3.5+)
 
