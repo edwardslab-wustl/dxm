@@ -60,7 +60,7 @@ If you are using [bismark](https://www.bioinformatics.babraham.ac.uk/projects/bi
 
     awk '{cov = $5 + $6; print $1"\t"$2"\t"$3"\t"$4"\t"cov;}' methylation.bismark.cov > methylation.bed
 
-If you are using [bsmap](https://code.google.com/archive/p/bsmap/), use the output from the methratio.py. We recomend also using the -g flag in methratio.py to collapse CpGs across strands.  If your file is called methratio.txt, then you can convert it using:
+If you are using [bsmap](https://code.google.com/archive/p/bsmap/), use the output from the methratio.py script. We recomend using the -g flag to collapse CpGs across strands.  If your file is called methratio.txt, then you can convert it using:
 
     awk '{if($4 == "CG") { pos2=$2 + 1; print $1"\t"$2"\t"pos2"\t"$5"\t"$6;}}' methratio.txt > methylation.bed
 
