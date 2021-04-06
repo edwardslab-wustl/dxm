@@ -47,15 +47,15 @@ All data should be filtered such that coverage is below the maximum expected seq
 
 DXM generates relative coordinates for internal calculations. As such, it does not explicitly utilize chromosome or position2 data, though these columns are required by DXM to be compatible with BED-like files. DXM computes across all CpGs of a given region, and thus, unique region names should be generated for each region of interest. We recommend adding region names with utilities such as the 'intersect' command from [bedtools](https://bedtools.readthedocs.io/en/latest/).
 
-For example, to overlap bismark output with all CGIs and assuming you are using the .cov produced by bismark_methylation_extractor (chr pos1 pos2 methylation meth_cov unmeth_cov) in a file called methylation.bismark.cov.  
+For example, to overlap [bismark](https://www.bioinformatics.babraham.ac.uk/projects/bismark/) output with all CGIs and assuming you are using the .cov produced by bismark_methylation_extractor (chr pos1 pos2 methylation meth_cov unmeth_cov) in a file called methylation.bismark.cov.  
 1. Download the CGI bed file using the [UCSC Genome Browser Table Browser](https://genome.ucsc.edu/cgi-bin/hgTables) to a file named cgi.bed
-2. Convert bismark .cov file to a bed-like file: awk '{cov = $5 + $6; print $1"\t"$2"\t"$3"\t"$4"\t"cov;}' methylation.bismark.cov > methylation.bg
-3. Overlap the data and filter the correct columns: bedtools intersect -wo -a methylation.bg -b cgi.bed | awk '{print $1"\t"$2"\t"$3"\t"$9"\t"$4"\t"$5;}' > dxm_in.bg
+2. Convert bismark .cov file to a bed-like file: awk '{cov = $5 + $6; print $1"\t"$2"\t"$3"\t"$4"\t"cov;}' methylation.bismark.cov > methylation.bed
+3. Overlap the data and filter the correct columns: bedtools intersect -wo -a methylation.bed -b cgi.bed | awk '{print $1"\t"$2"\t"$3"\t"$9"\t"$4"\t"$5;}' > dxm_in.bed
 
 If you are using [bsmap](https://code.google.com/archive/p/bsmap/), using the output from the methratio.py command (we recomend also using the -g flag to collapse CpGs across strands), substitute this instead of command #2 above:
-awk '{if($4 == "CG") { pos2=$2 + 1; print $1"\t"$2"\t"pos2"\t"$5"\t"$6;}}' methratio.txt > methylation.bg
+awk '{if($4 == "CG") { pos2=$2 + 1; print $1"\t"$2"\t"pos2"\t"$5"\t"$6;}}' methratio.txt > methylation.bed
 
-If you are using [biscuit](https://huishenlab.github.io/biscuit/), the bed output from the mergeCG or vcf2bed should be able to be used directly in the bed intersect command above.
+If you are using [biscuit](https://huishenlab.github.io/biscuit/), the bed output from vcf2bed can be used directly instead of the methylation.bed file in the bed intersect command above.  If you use the mergecg command in the biscuit pipeline (recommended), you must first extract the appropriate columns.  E.g. if the merge file is called merge.bed then run "cut -f 1-5 merge.bed > methylation.bed" and then use the bedtools intersect command above.
 
 
 ### dxm_estimateFracs
