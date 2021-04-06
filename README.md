@@ -52,6 +52,11 @@ For example, to overlap bismark output with all CGIs and assuming you are using 
 2. Convert bismark .cov file to a bed-like file: awk '{cov = $5 + $6; print $1"\t"$2"\t"$3"\t"$4"\t"cov;}' methylation.bismark.cov > methylation.bg
 3. Overlap the data and filter the correct columns: bedtools intersect -wo -a methylation.bg -b cgi.bed | awk '{print $1"\t"$2"\t"$3"\t"$9"\t"$4"\t"$5;}' > dxm_in.bg
 
+If you are using [bsmap](https://code.google.com/archive/p/bsmap/), using the output from the methratio.py command (we recomend also using the -g flag to collapse CpGs across strands), substitute this instead of command #2 above:
+awk '{if($4 == "CG") { pos2=$2 + 1; print $1"\t"$2"\t"pos2"\t"$5"\t"$6;}}' methratio.txt > methylation.bg
+
+If you are using [biscuit](https://huishenlab.github.io/biscuit/), the bed output from the mergeCG or vcf2bed should be able to be used directly in the bed intersect command above.
+
 
 ### dxm_estimateFracs
 Estimate the fractional prevalence of underlying subpopulations (Optional).
