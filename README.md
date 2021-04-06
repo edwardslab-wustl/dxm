@@ -45,7 +45,12 @@ coverage - sequencing coverage for that position. Please provide as an integer.
 
 All data should be filtered such that coverage is below the maximum expected sequencing coverage, set as the -m flag in dxm_solveMethylation.
 
-DXM generates relative coordinates for internal calculations. As such, it does not explicitly utilize chromosome or position2 data, though these columns are required by DXM to be compatible with BED-like files. DXM computes across all CpGs of a given region, and thus, unique region names should be generated for each region of interest. We recommend adding region names with utilities such as the 'intersect' command from BEDTOOLS, though linux commands such as awk can be used as well (https://stackoverflow.com/questions/7551991/add-a-new-column-to-the-file).
+DXM generates relative coordinates for internal calculations. As such, it does not explicitly utilize chromosome or position2 data, though these columns are required by DXM to be compatible with BED-like files. DXM computes across all CpGs of a given region, and thus, unique region names should be generated for each region of interest. We recommend adding region names with utilities such as the 'intersect' command from [bedtools](https://bedtools.readthedocs.io/en/latest/).
+
+For example, to overlap bismark output with all CGIs and assuming you are using the .cov produced by bismark_methylation_extractor (chr pos1 pos2 methylation meth_cov unmeth_cov) in a file called methylation.bismark.cov.  
+1. Download the CGI bed file using the [UCSC Genome Browser Table Browser](https://genome.ucsc.edu/cgi-bin/hgTables) to a file named cgi.bed
+2. Convert bismark .cov file to a bed-like file: awk '{cov = $5 + $6; print $1"\t"$2"\t"$3"\t"$4"\t"cov;}' methylation.bismark.cov > methylation.bg
+3. Overlap the data and filter the correct columns: bedtools intersect -wo -a methylation.bg -b cgi.bed | awk '{print $1"\t"$2"\t"$3"\t"$9"\t"$4"\t"$5;}' > dxm_in.bg
 
 
 ### dxm_estimateFracs
