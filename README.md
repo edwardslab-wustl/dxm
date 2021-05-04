@@ -51,12 +51,14 @@ DXM generates relative coordinates for internal calculations. As such, it does n
 
 For example, 
 1. Convert your methylation data to a tab-delimited BED-like file with these columns: chromosome position1 position2 methylation_level coverage. See examples below.
-2. Download the CGI bed file using the [UCSC Genome Browser Table Browser](https://genome.ucsc.edu/cgi-bin/hgTables) to a file named cgi.bed
+2. Download the CGI bed file using the [UCSC Genome Browser Table Browser](https://genome.ucsc.edu/cgi-bin/hgTables) to a file named cgi.bed. Be sure to use the appropriate genome version to match your data.
 3. Overlap the data and filter the correct columns: 
 
     bedtools intersect -wo -a methylation.bed -b cgi.bed | awk '{print $1"\t"$2"\t"$3"\t"$9"\t"$4"\t"$5;}' > dxm_in.bed
 
-To convert your methylation data to a tab-delimited BED-like file:
+Alternatively, if you want to use the regions +/- 5kb around the TSS for refSeq annotated genes (hg19) you can download and unzip the file refGene_hg19_10kb_fixed.txt.gz from the example_data directory. This file should work directly in place of the cgi.bed file in the command above.
+
+####To convert your methylation data to a tab-delimited BED-like file:
 
 If you are using [bismark](https://www.bioinformatics.babraham.ac.uk/projects/bismark/), start with the .cov produced by bismark_methylation_extractor (chr pos1 pos2 methylation meth_cov unmeth_cov). If your file is called methylation.bismark.cov, then you can convert it using:  
 
