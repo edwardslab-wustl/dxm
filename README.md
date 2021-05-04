@@ -39,7 +39,7 @@ Example:
 
     dxm_estimateFracs -i sampleInput.bed -k 3 -o testPrevalence
 
-The output is testPrevalence.txt. Each row is the fractional prevalence of a subpopulation, ordered smallest to largest. Note that this utility is INCOMPATIBLE with dxm_solveMethylation, which has its own fractional prevalence solution call.
+The output is testPrevalence_solvedPrevalences.txt. Each row is the fractional prevalence of a subpopulation, ordered smallest to largest. Note that this utility is INCOMPATIBLE with dxm_solveMethylation, which has its own fractional prevalence solution call.
 
 
 ### dxm_solveMethylation
