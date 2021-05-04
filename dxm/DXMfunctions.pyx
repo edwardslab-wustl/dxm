@@ -560,9 +560,10 @@ def runDXMnoIP(sampleName, outPref, refTable,maxCoverage,maxNumSubpop,REFFRACS,B
     start = timer()
     
     for i in range(0,len(GENE)):
-        if i % 1000 == 0:
-            timepoint = timer()
-            print('finished %s regions in %s' %(i+1,timepoint-start))
+        if i > 0:
+            if i % 1000 == 0:
+                timepoint = timer()
+                print('  finished %s regions in %s' %(i+1,timepoint-start))
         geneName = GENE[i]
         (startIndex, endIndex) = INDICES[i]
         newMeth = np.array(METHVALS[startIndex:endIndex+1])
@@ -602,6 +603,9 @@ def runDXMnoIP(sampleName, outPref, refTable,maxCoverage,maxNumSubpop,REFFRACS,B
         #SOLUTIONS[geneName] = (bestStates,newPos,bestOdds,bestProbPath)
         SOLUTIONS[geneName] = (bestStates,newPos,bestOdds,bestProbPath,orig_pos2,chrom)
         geneByNumSubpop[numSubpop].append(geneName)
+
+    timepoint = timer()
+    print('finished %s total regions in %s' %(len(GENE),timepoint-start))
 
     for keyVal in geneByNumSubpop.keys():
         OUTPUT = open('%s_reconstructed_%s_subpops.txt' %(outPref,keyVal),'w')
