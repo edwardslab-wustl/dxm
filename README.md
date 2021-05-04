@@ -58,7 +58,7 @@ For example,
 
 Alternatively, if you want to use the regions +/- 5kb around the TSS for refSeq annotated genes (hg19) you can download and unzip the file refGene_hg19_10kb_fixed.txt.gz from the example_data directory. This file should work directly in place of the cgi.bed file in the command above.
 
-####To convert your methylation data to a tab-delimited BED-like file:
+###To convert your methylation data to a tab-delimited BED-like file:
 
 If you are using [bismark](https://www.bioinformatics.babraham.ac.uk/projects/bismark/), start with the .cov produced by bismark_methylation_extractor (chr pos1 pos2 methylation meth_cov unmeth_cov). If your file is called methylation.bismark.cov, then you can convert it using:  
 
