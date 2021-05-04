@@ -31,21 +31,6 @@ Data for this example can be found in the example_data folder in the installatio
 
 \<chr\> \<position1\> \<position2\> \<regionName\> \<fractionalMethylation\> \<coverage\>
 
-### Input file format notes:
-
-chr - chromosome. Note that this field is not used and can be set to anything.
-
-regionName - please make unique name for each region tested (e.g. gene name)
-
-position1,position2 - e.g., a genomic coordinate. Please provide as integer.
-
-fractionalMethylation - values should be between 0 (fully unmethylated) and 1 (fully methylated)
-
-coverage - sequencing coverage for that position. Please provide as an integer.
-
-All data should be filtered such that coverage is below the maximum expected sequencing coverage, set as the -m flag in dxm_solveMethylation.
-We generally recommend collapsing data across strands prior to running DXM.
-
 
 ### dxm_estimateFracs
 Estimate the fractional prevalence of underlying subpopulations (Optional).
@@ -106,8 +91,23 @@ The output of dxm_callIDMR is putative_DXMdmrs.txt. Its format is tab-delimited:
 
 Note: if there are multiple putative iDMRs for the same region, they will have the same corresponding region name.
 
+## Input file format notes:
 
-### Examples on creating input files:
+chr - chromosome. Note that this field is not used and can be set to anything.
+
+regionName - please make unique name for each region tested (e.g. gene name)
+
+position1,position2 - e.g., a genomic coordinate. Please provide as integer.
+
+fractionalMethylation - values should be between 0 (fully unmethylated) and 1 (fully methylated)
+
+coverage - sequencing coverage for that position. Please provide as an integer.
+
+All data should be filtered such that coverage is below the maximum expected sequencing coverage, set as the -m flag in dxm_solveMethylation.
+We generally recommend collapsing data across strands prior to running DXM.
+
+
+## Examples for creating input files:
 DXM generates relative coordinates for internal calculations. As such, it does not explicitly utilize chromosome or position2 data, though these columns are required by DXM to be compatible with BED-like files. DXM computes across all CpGs of a given region, and thus, unique region names should be generated for each region of interest. We recommend adding region names with utilities such as the 'intersect' command from [bedtools](https://bedtools.readthedocs.io/en/latest/).
 
 For example, 
