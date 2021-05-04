@@ -44,6 +44,7 @@ fractionalMethylation - values should be between 0 (fully unmethylated) and 1 (f
 coverage - sequencing coverage for that position. Please provide as an integer.
 
 All data should be filtered such that coverage is below the maximum expected sequencing coverage, set as the -m flag in dxm_solveMethylation.
+We generally recommend collapsing data across strands prior to running DXM.
 
 ### Examples on creating input files:
 DXM generates relative coordinates for internal calculations. As such, it does not explicitly utilize chromosome or position2 data, though these columns are required by DXM to be compatible with BED-like files. DXM computes across all CpGs of a given region, and thus, unique region names should be generated for each region of interest. We recommend adding region names with utilities such as the 'intersect' command from [bedtools](https://bedtools.readthedocs.io/en/latest/).
@@ -65,7 +66,7 @@ If you are using [bsmap](https://code.google.com/archive/p/bsmap/), use the outp
 
     awk '{if($4 == "CG") { pos2=$2 + 1; print $1"\t"$2"\t"pos2"\t"$5"\t"$6;}}' methratio.txt > methylation.bed
 
-If you are using [biscuit](https://huishenlab.github.io/biscuit/), the bed output from vcf2bed can be used directly instead of the methylation.bed file in the bed intersect command above.  If you use the mergecg command in the biscuit pipeline (recommended), you must first extract the appropriate columns. If your file after merging is called merge.bed then you can convert it using:
+If you are using [biscuit](https://huishenlab.github.io/biscuit/), the bed output from vcf2bed can be used directly instead of the methylation.bed file in the bed intersect command above.  If you use the mergecg command in the biscuit pipeline (recommended), you must first extract the appropriate columns. If your file after merging is called merge.bed, then you can convert it using:
 
     cut -f 1-5 merge.bed > methylation.bed
 
