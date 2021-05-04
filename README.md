@@ -13,7 +13,7 @@ Requires python3 (3.5+)
 We recommend installing the anaconda (or similar) python distribution, which will include these packages.
 
 ### To install:
-Download the repository, then:
+Download or clone the repository, then:
 
     pip install .
 
