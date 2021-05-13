@@ -27,7 +27,7 @@ dxm is also available as a Docker container at: https://hub.docker.com/r/edwards
 
 ## Quick Start with Example Data
 
-Data for this example can be found in the example_data folder in the installation folder. The methylation data input file should be in a bed-like format:
+Data for this example can be found in the example_data folder in the installation folder. The methylation data input file should be in a tab-delimited bed-like format:
 
 \<chr\> \<position1\> \<position2\> \<regionName\> \<fractionalMethylation\> \<coverage\>
 
