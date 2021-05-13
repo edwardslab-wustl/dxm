@@ -59,6 +59,7 @@ Example:
 Notes: 
 
 -i specifies the input methylation data
+
 -c specifies the maximum coverage
 
 Set the -c flag to the maximum coverage in the input file.  Increasing -c above the maximum coverage will needlessly increase memory usage.
@@ -96,7 +97,9 @@ Example:
 Notes: 
 
 -v specifies the viterbi probability file output by DXM_solveMethylation
+
 -m specifies the reconstructed subpopulation file (e.g. for 2 subpopulations) output by DXM_solveMethylation
+
 -o specifes a base tab for the output file
 
 The output of dxm_callIDMR is putative_DXMdmrs.txt. Its format is tab-delimited:
