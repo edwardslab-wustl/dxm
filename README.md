@@ -108,7 +108,7 @@ Notes:
 
 -o specifes a prefix for the output file
 
-The output of dxm_callIDMR is <prefix>_DXM_dmrs.txt (e.g. putative_DXMdmrs.txt). Its format is tab-delimited:
+The output of dxm_callIDMR is \<prefix\>_DXM_dmrs.txt (e.g. putative_DXMdmrs.txt). Its format is tab-delimited:
 	1. chromosome
 	2. start coordinate
 	3. end coordinate
