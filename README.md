@@ -31,7 +31,7 @@ Data for this example can be found in the example_data folder in the installatio
 
 \<chr\> \<position1\> \<position2\> \<regionName\> \<fractionalMethylation\> \<coverage\>
 
-To prepare you own data for DXM analysis, please refer to the notes on input data below. This includes examples of how to process data from several popular bisulfite aligners.
+Please refer to the notes on input data below to prepare you own data for DXM analysis. Included below are examples of how to process data from several popular bisulfite aligners.
 
 ### dxm_estimateFracs
 Estimate the fractional prevalence of underlying subpopulations (Optional).
