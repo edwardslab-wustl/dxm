@@ -42,11 +42,13 @@ Example:
 
 Notes: 
 
--i specifies the input methylation data
--k specifies the number of expected subpopulations
--o specifies a base tag for the output fil
+  -i specifies the input methylation data
 
-The output is testPrevalence_solvedPrevalences.txt. Each row is the fractional prevalence of a subpopulation, ordered smallest to largest. Note that this utility is INCOMPATIBLE with dxm_solveMethylation, which has its own fractional prevalence solution call.
+  -k specifies the number of expected subpopulations
+
+  -o specifies a base tag for the output file
+
+The output is <base_tag>\_solvedPrecalences.txt (e.g. testPrevalence_solvedPrevalences.txt). Each row is the fractional prevalence of a subpopulation, ordered smallest to largest. Note that this utility is INCOMPATIBLE with dxm_solveMethylation, which has its own fractional prevalence solution call.
 
 
 ### dxm_solveMethylation
