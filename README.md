@@ -48,7 +48,7 @@ Notes:
 
   -o specifies a prefix for the output file
 
-The output is <prefix>\_solvedPrecalences.txt (e.g. testPrevalence_solvedPrevalences.txt). Each row is the fractional prevalence of a subpopulation, ordered smallest to largest. Note that this utility is INCOMPATIBLE with dxm_solveMethylation, which has its own fractional prevalence solution call.
+The output is \<prefix\>\_solvedPrecalences.txt (e.g. testPrevalence_solvedPrevalences.txt). Each row is the fractional prevalence of a subpopulation, ordered smallest to largest. Note that this utility is INCOMPATIBLE with dxm_solveMethylation, which has its own fractional prevalence solution call.
 
 
 ### dxm_solveMethylation
@@ -71,20 +71,20 @@ Set the -c flag to the maximum coverage in the input file.  Increasing -c above 
 DXM computational time scales with number of subpopulations, number of CpGs, and maximum coverage. DXM solved eRRBS and Methyl-Seq samples for 2 subpopulations at average coverage of 60x in ~2 hours.
 
 The outputs of dxm_solveMethylation are:
-- <prefix>_reconstructed_1_subpops.txt  - regions with 1 major profile
-- <prefix>_reconstructed_2_subpops.txt  - regions with 2 major methylation profiles
-- <prefix>_allVitProb.txt  - list of all relative posterior probabilities
+- \<prefix\>_reconstructed_1_subpops.txt  - regions with 1 major profile
+- \<prefix\>_reconstructed_2_subpops.txt  - regions with 2 major methylation profiles
+- \<prefix\>_allVitProb.txt  - list of all relative posterior probabilities
 
-<prefix> = testSample in this example.
+\<prefix\> = testSample in this example.
 
-These are tab-delimited files. The format for <prefix>_reconstructed_1_subpops.txt is:
+These are tab-delimited files. The format for \<prefix\>_reconstructed_1_subpops.txt is:
 1. chromosome
 2. position
 3. position2
 4. region name
 5. methylation state of major (only) subpopulation
 
-The format for <prefix>_reconstructed_2_subpops.txt is:
+The format for \<prefix\>_reconstructed_2_subpops.txt is:
 1. chromosome
 2. position
 3. position2
