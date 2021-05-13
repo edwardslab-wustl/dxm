@@ -46,9 +46,9 @@ Notes:
 
   -k specifies the number of expected subpopulations
 
-  -o specifies a base tag for the output file
+  -o specifies a prefix for the output file
 
-The output is <base_tag>\_solvedPrecalences.txt (e.g. testPrevalence_solvedPrevalences.txt). Each row is the fractional prevalence of a subpopulation, ordered smallest to largest. Note that this utility is INCOMPATIBLE with dxm_solveMethylation, which has its own fractional prevalence solution call.
+The output is <prefix>\_solvedPrecalences.txt (e.g. testPrevalence_solvedPrevalences.txt). Each row is the fractional prevalence of a subpopulation, ordered smallest to largest. Note that this utility is INCOMPATIBLE with dxm_solveMethylation, which has its own fractional prevalence solution call.
 
 
 ### dxm_solveMethylation
@@ -56,31 +56,35 @@ Deconvolves processed methylation sequencing data.
 
 Example: 
 
-    dxm_solveMethylation -i sampleInput.bed -o testSample
+    dxm_solveMethylation -i sampleInput.bed -c 400 -o testSample
 
 Notes: 
 
--i specifies the input methylation data
+  -i specifies the input methylation data
 
--c specifies the maximum coverage
+  -c specifies the maximum coverage (default 400)
 
-Set the -c flag to the maximum coverage in the input file.  Increasing -c above the maximum coverage will needlessly increase memory usage.
+  -o specifies a prefix for the output file
+
+Set the -c flag to the maximum coverage in the input file.  Increasing -c above the maximum coverage will needlessly increase memory usage. Additional flags for user specified advanced parameters can be seen using the --help flag.
 
 DXM computational time scales with number of subpopulations, number of CpGs, and maximum coverage. DXM solved eRRBS and Methyl-Seq samples for 2 subpopulations at average coverage of 60x in ~2 hours.
 
 The outputs of dxm_solveMethylation are:
-- testSample_reconstructed_1_subpops.txt  - regions with 1 major profile
-- testSample_reconstructed_2_subpops.txt  - regions with 2 major methylation profiles
-- testSample_allVitProb.txt  - list of all relative posterior probabilities
+- <prefix>_reconstructed_1_subpops.txt  - regions with 1 major profile
+- <prefix>_reconstructed_2_subpops.txt  - regions with 2 major methylation profiles
+- <prefix>_allVitProb.txt  - list of all relative posterior probabilities
 
-These are tab-delimited files. The format for testSample_reconstructed_1_subpops.txt is:
+<prefix> = testSample in this example.
+
+These are tab-delimited files. The format for <prefix>_reconstructed_1_subpops.txt is:
 1. chromosome
 2. position
 3. position2
 4. region name
 5. methylation state of major (only) subpopulation
 
-The format for testSample_reconstructed_2_subpops.txt is:
+The format for <prefix>_reconstructed_2_subpops.txt is:
 1. chromosome
 2. position
 3. position2
@@ -98,17 +102,17 @@ Example:
 
 Notes: 
 
--v specifies the viterbi probability file output by DXM_solveMethylation
+-v specifies the posterior probability file output by DXM_solveMethylation
 
 -m specifies the reconstructed subpopulation file (e.g. for 2 subpopulations) output by DXM_solveMethylation
 
--o specifes a base tab for the output file
+-o specifes a prefix for the output file
 
-The output of dxm_callIDMR is putative_DXMdmrs.txt. Its format is tab-delimited:
+The output of dxm_callIDMR is <prefix>_DXM_dmrs.txt (e.g. putative_DXMdmrs.txt). Its format is tab-delimited:
 	1. chromosome
 	2. start coordinate
 	3. end coordinate
-	4. region name.
+	4. region name
 
 If there are multiple putative iDMRs for the same region, they will have the same corresponding region name.
 
@@ -118,11 +122,11 @@ The methylation data input file should be in a tab-delimited bed-like format:
 
 \<chr\> \<position1\> \<position2\> \<regionName\> \<fractionalMethylation\> \<coverage\>
 
-chr - chromosome. Note that this field is not used and can be set to anything.
+chr - chromosome. Note that this field is not used and can be set to a non-standard chromosome name if useful.
 
-position1,position2 -  genomic coordinates. Please provide as integers.
+position1,position2 -  genomic coordinates. Please provide as integers.  Normally these will be absolute coordinates, but they can be relative if appropriate for your problem.
 
-regionName - please make unique name for each region tested (e.g. gene name)
+regionName - please make unique name for each region tested (e.g. gene name, CGI ID, enhancer ID, etc.)
 
 fractionalMethylation - values should be between 0 (fully unmethylated) and 1 (fully methylated)
 
