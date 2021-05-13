@@ -40,6 +40,12 @@ Example:
 
     dxm_estimateFracs -i sampleInput.bed -k 3 -o testPrevalence
 
+Notes: 
+
+-i specifies the input methylation data
+-k specifies the number of expected subpopulations
+-o specifies a base tag for the output fil
+
 The output is testPrevalence_solvedPrevalences.txt. Each row is the fractional prevalence of a subpopulation, ordered smallest to largest. Note that this utility is INCOMPATIBLE with dxm_solveMethylation, which has its own fractional prevalence solution call.
 
 
@@ -51,6 +57,9 @@ Example:
     dxm_solveMethylation -i sampleInput.bed -o testSample
 
 Notes: 
+
+-i specifies the input methylation data
+-c specifies the maximum coverage
 
 Set the -c flag to the maximum coverage in the input file.  Increasing -c above the maximum coverage will needlessly increase memory usage.
 
@@ -84,41 +93,50 @@ Example:
 
     dxm_callIDMR -v testSample_allVitProb.txt -m testSample_reconstructed_2_subpops.txt -o putative
 
+Notes: 
+
+-v specifies the viterbi probability file output by DXM_solveMethylation
+-m specifies the reconstructed subpopulation file (e.g. for 2 subpopulations) output by DXM_solveMethylation
+-o specifes a base tab for the output file
+
 The output of dxm_callIDMR is putative_DXMdmrs.txt. Its format is tab-delimited:
 	1. chromosome
 	2. start coordinate
 	3. end coordinate
 	4. region name.
 
-Note: if there are multiple putative iDMRs for the same region, they will have the same corresponding region name.
+If there are multiple putative iDMRs for the same region, they will have the same corresponding region name.
+
 
 ## Input file format notes:
+The methylation data input file should be in a tab-delimited bed-like format:
+
+\<chr\> \<position1\> \<position2\> \<regionName\> \<fractionalMethylation\> \<coverage\>
 
 chr - chromosome. Note that this field is not used and can be set to anything.
 
-regionName - please make unique name for each region tested (e.g. gene name)
+position1,position2 -  genomic coordinates. Please provide as integers.
 
-position1,position2 - e.g., a genomic coordinate. Please provide as integer.
+regionName - please make unique name for each region tested (e.g. gene name)
 
 fractionalMethylation - values should be between 0 (fully unmethylated) and 1 (fully methylated)
 
 coverage - sequencing coverage for that position. Please provide as an integer.
 
-All data should be filtered such that coverage is below the maximum expected sequencing coverage, set as the -m flag in dxm_solveMethylation.
+All data should be filtered such that the coverage is below the maximum expected sequencing coverage, set as the -m flag in dxm_solveMethylation.
 We generally recommend collapsing data across strands prior to running DXM.
+
+DXM generates relative coordinates for internal calculations. As such, it does not explicitly utilize chromosome or position2 data, though these columns are required by DXM to be compatible with BED-like files. DXM computes across all CpGs of a given region, and thus, unique region names should be generated for each region of interest. We recommend adding region names with utilities such as the 'intersect' command from [bedtools](https://bedtools.readthedocs.io/en/latest/).
 
 
 ## Examples for creating input files:
-DXM generates relative coordinates for internal calculations. As such, it does not explicitly utilize chromosome or position2 data, though these columns are required by DXM to be compatible with BED-like files. DXM computes across all CpGs of a given region, and thus, unique region names should be generated for each region of interest. We recommend adding region names with utilities such as the 'intersect' command from [bedtools](https://bedtools.readthedocs.io/en/latest/).
-
-For example, 
 1. Convert your methylation data to a tab-delimited BED-like file with these columns: chromosome position1 position2 methylation_level coverage. See examples below.
 2. Download the CGI bed file using the [UCSC Genome Browser Table Browser](https://genome.ucsc.edu/cgi-bin/hgTables) to a file named cgi.bed. Be sure to use the appropriate genome version to match your data.
 3. Overlap the data and filter the correct columns: 
 
     bedtools intersect -wo -a methylation.bed -b cgi.bed | awk '{print $1"\t"$2"\t"$3"\t"$9"\t"$4"\t"$5;}' > dxm_in.bed
 
-Alternatively, if you want to use the regions +/- 5kb around the TSS for refSeq annotated genes (hg19) you can download and unzip the file refGene_hg19_10kb_fixed.txt.gz from the example_data directory. This file should work directly in place of the cgi.bed file in the command above.
+Alternatively, if you want to use the regions +/- 5kb around the TSS for refSeq annotated genes (hg19) you can download and unzip the file refGene_hg19_10kb_fixed.txt.gz from the example_data directory. This file should work directly in place of the cgi.bed file in the command above.  You can also use any bed file of any feature or set of coordinates you want to use for analysis. However, you may need to change which columns are printed in the awk statement.
 
 ### To convert your methylation data to a tab-delimited BED-like file:
 
