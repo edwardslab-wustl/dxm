@@ -258,6 +258,7 @@ def getBestFractions(maxSubpopToConsider,userCompute,methDistFile):
         FRACS.append(np.array([1.0]))
         for numSubpop in range(2,maxSubpopToConsider+1):
             goodOutput = solveMostLikelyFrac(methDist,numSubpop)
+            print("using estimated cell FRACS: " + str(goodOutput))
             FRACS.append(np.array(goodOutput))
     return FRACS
 
