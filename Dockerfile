@@ -6,3 +6,7 @@ RUN /usr/bin/python3 -m pip install Cython
 RUN /usr//bin/python3 -m pip install numpy
 RUN /usr/bin/python3 -m pip install git+https://github.com/edwardslab-wustl/dxm.git
 
+ADD example_data.tgz /usr/local
+
+
+
